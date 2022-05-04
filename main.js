@@ -1,6 +1,9 @@
 let buttonColours = ["red", "blue", "green", "yellow"];
 let gamePattern = [];
 let userClickedPattern = [];
+let level = 0;
+
+let mainMessage = document.querySelector("#level-title");
 
 function nextSequence() {
   let randomNumber = Math.floor(Math.random() * 4);
@@ -8,8 +11,17 @@ function nextSequence() {
   gamePattern.push(randomChosenColour);
   animatePress(randomChosenColour);
   playSound(randomChosenColour);
+  mainMessage.textContent = `Level ${level}`;
+  level++;
 }
-nextSequence();
+
+let started = false;
+if (started === false) {
+  document.addEventListener("keydown", () => {
+    started = true;
+    nextSequence();
+  });
+}
 
 let clickedButton = document.querySelectorAll(".btn");
 clickedButton.forEach((btn) => {
