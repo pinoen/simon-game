@@ -9,3 +9,12 @@ function nextSequence() {
 let randomChosenColour = buttonColours[nextSequence()];
 
 gamePattern.push(randomChosenColour);
+
+let activeButton = document.querySelector(`#${randomChosenColour}`);
+activeButton.classList.add("pressed");
+setTimeout(() => {
+  activeButton.classList.remove("pressed");
+}, 300);
+
+let colorSound = new Audio(`sounds/${randomChosenColour}.mp3`);
+colorSound.play();
