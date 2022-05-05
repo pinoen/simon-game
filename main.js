@@ -65,3 +65,9 @@ function playSound(name) {
   let colorSound = new Audio(`sounds/${name}.mp3`);
   colorSound.play();
 }
+
+function startOver() {
+  level = 0;
+  gamePattern = [];
+  started = false;
+}
