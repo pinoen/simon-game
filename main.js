@@ -2,26 +2,16 @@ let buttonColours = ["red", "blue", "green", "yellow"];
 let gamePattern = [];
 let userClickedPattern = [];
 let level = 0;
-
+let started = false;
 let mainMessage = document.querySelector("#level-title");
 
-function nextSequence() {
-  let randomNumber = Math.floor(Math.random() * 4);
-  let randomChosenColour = buttonColours[randomNumber];
-  gamePattern.push(randomChosenColour);
-  animatePress(randomChosenColour);
-  playSound(randomChosenColour);
-  mainMessage.textContent = `Level ${level}`;
-  level++;
-}
-
-let started = false;
-if (started === false) {
-  document.addEventListener("keydown", () => {
-    started = true;
+document.addEventListener("keydown", () => {
+  if (!started) {
+    mainMessage.textContent = `Level ${level}`;
     nextSequence();
-  });
-}
+    started = true;
+  }
+});
 
 let clickedButton = document.querySelectorAll(".btn");
 clickedButton.forEach((btn) => {
@@ -30,12 +20,37 @@ clickedButton.forEach((btn) => {
     userClickedPattern.push(userChosenColour);
     playSound(userChosenColour);
     animatePress(userChosenColour);
+    checkAnswer(userClickedPattern.length - 1);
   });
 });
 
-function playSound(name) {
-  let colorSound = new Audio(`sounds/${name}.mp3`);
-  colorSound.play();
+function checkAnswer(currentLevel) {
+  if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+    if (gamePattern.length === userClickedPattern.length) {
+      setTimeout(() => {
+        nextSequence();
+      }, 1000);
+    }
+  } else {
+    playSound("wrong");
+    document.body.classList.add("game-over");
+    mainMessage.textContent = "Game Over, Press Any Key to Restart";
+    setTimeout(() => {
+      document.body.classList.remove("game-over");
+    }, 200);
+    startOver();
+  }
+}
+
+function nextSequence() {
+  userClickedPattern = [];
+  level++;
+  mainMessage.textContent = `Level ${level}`;
+  let randomNumber = Math.floor(Math.random() * 4);
+  let randomChosenColour = buttonColours[randomNumber];
+  gamePattern.push(randomChosenColour);
+  animatePress(randomChosenColour);
+  playSound(randomChosenColour);
 }
 
 function animatePress(currentColor) {
@@ -44,4 +59,9 @@ function animatePress(currentColor) {
   setTimeout(() => {
     activeButton.classList.remove("pressed");
   }, 150);
+}
+
+function playSound(name) {
+  let colorSound = new Audio(`sounds/${name}.mp3`);
+  colorSound.play();
 }
