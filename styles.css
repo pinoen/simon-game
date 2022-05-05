@@ -50,3 +50,30 @@ body {
   box-shadow: 0 0 20px white;
   background-color: grey;
 }
+footer {
+  margin-top: 5%;
+  color: #eeeeee;
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+}
+
+footer p {
+  text-align: center;
+  margin-top: 10px;
+  color: whitesmoke;
+  padding: 30px;
+  font-size: small;
+}
+#pie-pagina {
+  background: url(bg.jpg);
+  height: 100%;
+  width: 100%;
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+a:hover {
+  cursor: pointer;
+  font-weight: bolder;
+}
