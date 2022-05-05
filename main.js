@@ -13,6 +13,30 @@ document.addEventListener("keydown", () => {
   }
 });
 
+function playSound(name) {
+  let colorSound = new Audio(`sounds/${name}.mp3`);
+  colorSound.play();
+}
+
+function animatePress(currentColor) {
+  let activeButton = document.querySelector(`#${currentColor}`);
+  activeButton.classList.add("pressed");
+  setTimeout(() => {
+    activeButton.classList.remove("pressed");
+  }, 150);
+}
+
+function nextSequence() {
+  userClickedPattern = [];
+  level++;
+  mainMessage.textContent = `Level ${level}`;
+  let randomNumber = Math.floor(Math.random() * 4);
+  let randomChosenColour = buttonColours[randomNumber];
+  gamePattern.push(randomChosenColour);
+  animatePress(randomChosenColour);
+  playSound(randomChosenColour);
+}
+
 let clickedButton = document.querySelectorAll(".btn");
 clickedButton.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -40,30 +64,6 @@ function checkAnswer(currentLevel) {
     }, 200);
     startOver();
   }
-}
-
-function nextSequence() {
-  userClickedPattern = [];
-  level++;
-  mainMessage.textContent = `Level ${level}`;
-  let randomNumber = Math.floor(Math.random() * 4);
-  let randomChosenColour = buttonColours[randomNumber];
-  gamePattern.push(randomChosenColour);
-  animatePress(randomChosenColour);
-  playSound(randomChosenColour);
-}
-
-function animatePress(currentColor) {
-  let activeButton = document.querySelector(`#${currentColor}`);
-  activeButton.classList.add("pressed");
-  setTimeout(() => {
-    activeButton.classList.remove("pressed");
-  }, 150);
-}
-
-function playSound(name) {
-  let colorSound = new Audio(`sounds/${name}.mp3`);
-  colorSound.play();
 }
 
 function startOver() {
